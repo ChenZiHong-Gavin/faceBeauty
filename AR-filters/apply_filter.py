@@ -298,7 +298,7 @@ def get_AR_video(video_in, video_out):
 #     if key == ord('q'):
 #         break
 
-filename = "E:\\06.MOV"
-outFilename = "E:\\results\\AReffect\\06.avi"
-
-dst = get_AR_video(filename, outFilename)
+# filename = "E:\\06.MOV"
+# outFilename = "E:\\results\\AReffect\\06.avi"
+#
+# dst = get_AR_video(filename, outFilename)
