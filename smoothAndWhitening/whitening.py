@@ -2,10 +2,8 @@
 # 使用颜色序列
 from PIL import Image, ImageEnhance
 import cv2
-from mediapipe.python.solutions.drawing_utils import _normalized_to_pixel_coordinates
-import getSkin
-import faceDect.faceDetect as faceDect
 import numpy as np
+from numpy.random import random
 
 Color_list = [
     1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 31, 33, 35, 37, 39,
@@ -27,7 +25,7 @@ Color_list = [
 
 
 # 视频方法
-def face_smooth_video(video_in, video_out):
+def face_white_video(video_in, video_out):
     '''
         双边滤波方法
         src：原图像；
@@ -63,14 +61,14 @@ def face_white_picture(image):
     img = image
     height, width, n = image.shape
     newFace = image.copy()
-    for i in range(height):
-        for j in range(width):
-            b = newFace[i, j, 0]
-            g = newFace[i, j, 1]
-            r = newFace[i, j, 2]
-            newFace[i, j, 0] = Color_list[b]
-            newFace[i, j, 1] = Color_list[g]
-            newFace[i, j, 2] = Color_list[r]
+    # for i in range(height):
+    #     for j in range(width):
+    #         b = newFace[i, j, 0]
+    #         g = newFace[i, j, 1]
+    #         r = newFace[i, j, 2]
+    #         newFace[i, j, 0] = Color_list[b]
+    #         newFace[i, j, 1] = Color_list[g]
+    #         newFace[i, j, 2] = Color_list[r]
     img2 = Image.fromarray(newFace)
     # 锐度调节
     enh_img = ImageEnhance.Sharpness(img2)
@@ -81,6 +79,21 @@ def face_white_picture(image):
     image_con = con_img.enhance(1.2)
     white_face = np.asarray(image_con)
     return white_face
+
+# 光线增强
+def add_light(img):
+    # 将bgr转化为hsv
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    img = img.astype(np.float)
+    # 获取v通道（颜色亮度通道），并做渐变性的增强
+    img[:, :, 2] = np.where(img[:, :, 2] > 100, img[:, :, 2] + 20.0, img[:, :, 2])
+    img[:, :, 2] = np.where(img[:, :, 2] > 150, img[:, :, 2] + 30.0, img[:, :, 2])
+    img[:, :, 2] = np.where(img[:, :, 2] > 180, img[:, :, 2] + 40.0, img[:, :, 2])
+    # 令大于255的像素值等于255（防止溢出）
+    img = np.where(img > 255, 255, img)
+    img = img.astype(np.uint8)
+    res = cv2.cvtColor(img, cv2.COLOR_HSV2BGR)
+    return res
 
 # filename = "05.jpg"
 # image = cv2.imread("E:\\" + filename, cv2.IMREAD_COLOR)

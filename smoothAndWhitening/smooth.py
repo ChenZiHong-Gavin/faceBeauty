@@ -100,7 +100,7 @@ def face_smooth_picture(image):
 # dst = face_smooth_picture(image)
 # cv2.imwrite("E:\\results\\smooth\\" + filename, dst)
 
-filename = "E:\\06.MOV"
-outFilename = "E:\\results\\smooth\\06.avi"
-
-dst = face_smooth_video(filename, outFilename)
+# filename = "E:\\06.MOV"
+# outFilename = "E:\\results\\smooth\\06.avi"
+#
+# dst = face_smooth_video(filename, outFilename)

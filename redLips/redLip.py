@@ -30,7 +30,7 @@ def change_color_lip(img, list_lms, index_lip_up, index_lip_down, color):
 def empty(a):
     pass
 
-def get_lip_picture(image):
+def get_lip_picture(image, color):
     # 创建人脸关键点检测对象
     mp_face_mesh = mp.solutions.face_mesh
     face_mesh = mp_face_mesh.FaceMesh(static_image_mode=False,
@@ -44,7 +44,7 @@ def get_lip_picture(image):
     # color = (255, 0, 0)
     # color = (255, 255, 0)
     # 小辣椒色
-    color = (41, 48, 178)
+    # color = (41, 48, 178)
     # 正红色
     # color = (13, 3, 194)
     # 牛血红
@@ -108,7 +108,7 @@ def get_lip_video(video_in, video_out):
 # dst = get_lip_picture(image)
 # cv2.imwrite("E:\\results\\redlip\\" + filename, dst)
 
-filename = "E:\\06.MOV"
-outFilename = "E:\\results\\redlip\\06.avi"
-
-dst = get_lip_video(filename, outFilename)
+# filename = "E:\\06.MOV"
+# outFilename = "E:\\results\\redlip\\06.avi"
+#
+# dst = get_lip_video(filename, outFilename)
