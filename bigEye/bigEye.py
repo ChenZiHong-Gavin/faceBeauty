@@ -28,22 +28,18 @@ def get_landmarks_points(img, det_face, det_landmarks):
 def BilinearInsert(src, pt_U):
     ux = pt_U[0]
     uy = pt_U[1]
-
     x1 = np.float32(int(ux))
     x2 = x1 + 1
     y1 = np.float32(int(uy))
     y2 = y1 + 1
-
     v1 = np.float32(src[int(y1), int(x1)])
     v2 = np.float32(src[int(y1), int(x2)])
     v3 = np.float32(src[int(y2), int(x1)])
     v4 = np.float32(src[int(y2), int(x2)])
-
     part1 = v1 * (x2 - ux) * (y2 - uy)
     part2 = v2 * (ux - x1) * (y2 - uy)
     part3 = v3 * (x2 - ux) * (uy - y1)
     part4 = v4 * (ux - x1) * (uy - y1)
-
     insertValue = part1 + part2 + part3 + part4
     return insertValue.astype(np.uint8)
 

@@ -62,10 +62,31 @@ def getFaceRectangle(image):
                     mp_drawing.draw_detection(image, detection)
                 return results.detections[0].location_data.relative_bounding_box
 
-# image = cv2.imread("E:\\02.jpg", cv2.IMREAD_COLOR)
-# # 人脸区域检测
-# dst = getFaceRectangle(image)
-#
+def getKeyPoints(image):
+    mp_face_detection = mp.solutions.face_detection
+    mp_drawing = mp.solutions.drawing_utils
+    with mp_face_detection.FaceDetection(
+            model_selection=1, min_detection_confidence=0.5) as face_detection:
+            # Convert the BGR image to RGB and process it with MediaPipe Face Detection.
+            results = face_detection.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+
+            # Draw face detections of each face.
+            if not results.detections:
+                return
+            annotated_image = image.copy()
+            for detection in results.detections:
+                print('Nose tip:')
+                print(mp_face_detection.get_key_point(
+                    detection, mp_face_detection.FaceKeyPoint.NOSE_TIP))
+                mp_drawing.draw_detection(annotated_image, detection)
+            return annotated_image
+
+filename = "05.jpg"
+image = cv2.imread("E:\\"+filename, cv2.IMREAD_COLOR)
+# 人脸区域检测
+dst = getKeyPoints(image)
+
+cv2.imwrite("E:\\results\\faceDetect\\" + filename, dst)
 # cv2.namedWindow("1", cv2.WINDOW_NORMAL)
 # cv2.imshow('1', dst)
 # while True:
